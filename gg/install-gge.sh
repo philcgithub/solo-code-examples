@@ -11,7 +11,7 @@ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/downloa
 helm repo add glooe https://storage.googleapis.com/gloo-ee-helm
 helm repo update
 
-helm install -n gloo-system gloo-gateway glooe/gloo-ee \
+ helm install -n gloo-system gloo-gateway glooe/gloo-ee \
 --create-namespace \
 --version 1.18.2 \
 --set-string license_key=$GLOO_GATEWAY_LICENSE_KEY \
