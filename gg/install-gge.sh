@@ -6,26 +6,52 @@ else
     echo $VAR
 fi
 
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
 
 helm repo add glooe https://storage.googleapis.com/gloo-ee-helm
 helm repo update
 
- helm install -n gloo-system gloo-gateway glooe/gloo-ee \
---create-namespace \
+#  helm install -n gloo-system gloo-gateway glooe/gloo-ee \
+# --create-namespace \
+# --version 1.18.2 \
+# --set-string license_key=$GLOO_GATEWAY_LICENSE_KEY \
+# -f -<<EOF
+# gloo:
+#   discovery:
+#     enabled: false
+#   gatewayProxies:
+#     gatewayProxy:
+#       disabled: true
+#   kubeGateway:
+#     enabled: true
+#   gloo:
+#     disableLeaderElection: true
+# gloo-fed:
+#   enabled: false
+#   glooFedApiserver:
+#     enable: false
+# grafana:
+#   defaultInstallationEnabled: false
+# observability:
+#   enabled: false
+# prometheus:
+#   enabled: false
+# EOF
+
+glooctl install gateway enterprise \
+--license-key $GLOO_GATEWAY_LICENSE_KEY \
 --version 1.18.2 \
---set-string license_key=$GLOO_GATEWAY_LICENSE_KEY \
--f -<<EOF
+--values - << EOF
 gloo:
   discovery:
     enabled: false
   gatewayProxies:
     gatewayProxy:
       disabled: true
-  kubeGateway:
-    enabled: true
   gloo:
     disableLeaderElection: true
+  kubeGateway:
+    enabled: true
 gloo-fed:
   enabled: false
   glooFedApiserver:
