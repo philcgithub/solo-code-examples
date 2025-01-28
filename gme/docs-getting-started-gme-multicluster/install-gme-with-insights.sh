@@ -216,6 +216,6 @@ EOF
 kubectl get ns --context $REMOTE_CONTEXT1
 kubectl get ns --context $REMOTE_CONTEXT2
 
-sleep 10
+sleep 15
 kubectl get mesh -n gloo-mesh --context $REMOTE_CONTEXT1
 kubectl get mesh -n gloo-mesh --context $REMOTE_CONTEXT2
